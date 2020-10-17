@@ -1,47 +1,47 @@
-var current= document.getElementById("currentDay");
-current.textContent = moment().format('dddd, MMM Do'); 
-var nine= document.getElementById("nine");
-var ten= document.getElementById("ten");
-var eleven= document.getElementById("eleven");
-var twelve= document.getElementById("twelve");
-var one= document.getElementById("one");
-var two= document.getElementById("two");
-var three= document.getElementById("three");
-var four= document.getElementById("four");
-var five= document.getElementById("five");
-var btn = document.querySelectorAll("button");
+var today= document.getElementById("currentDay");
+today.textContent = moment().format('dddd, MMM Do'); 
+var nineAM= document.getElementById("nine");
+var tenAM= document.getElementById("ten");
+var elevenAM= document.getElementById("eleven");
+var twelveAM= document.getElementById("twelve");
+var onePM= document.getElementById("one");
+var twoPM= document.getElementById("two");
+var threePM= document.getElementById("three");
+var fourPM= document.getElementById("four");
+var fivePM= document.getElementById("five");
+var savebtn = document.querySelectorAll("button");
 var clearbtn= document.getElementById("clear");
 
 var schedule = {
-    sched: [nine, ten, eleven, twelve, one, two, three, four, five], 
-    times: [9, 10, 11, 12, 13, 14, 15, 16, 17]
+    times: [nineAM, tenAM, elevenAM, twelveAM, onePM, twoPM, threePM, fourPM, fivePM], 
+    timeInts: [9, 10, 11, 12, 13, 14, 15, 16, 17]
 };
 
 function ScheduleColor() {
-    for (var i= 0; i < 9; i++) {
-        if (schedule.times[i] < moment().format('H')) {
-           schedule.sched[i].className = "past";
-        } else if (schedule.times[i] == moment().format('H')) {
-            schedule.sched[i].className = "present";
+    for (var i= 0; i < schedule.times.length; i++) {
+        if (schedule.timeInts[i] < moment().format('H')) {
+           schedule.times[i].className = "past";
+        } else if (schedule.timeInts[i] == moment().format('H')) {
+            schedule.times[i].className = "present";
         } else {
-            schedule.sched[i].className = "future";
+            schedule.times[i].className = "future";
         }
     }
 }
 
 function main() {
-    for (var i= 0; i < schedule.sched.length; i++) {
-        var text= schedule.sched[i];
-        var item = localStorage.getItem(text.id);
-        text.value = item;
+    for (var i= 0; i < schedule.times.length; i++) {
+        var content= schedule.times[i];
+        var savedItem = localStorage.getItem(content.id);
+        content.value = savedItem;
     }
     
     ScheduleColor();
 }
 
-$(btn).on("click", function() {
-    var ff= document.getElementById(this.value);
-    localStorage.setItem(this.value, ff.value);
+$(savebtn).on("click", function() {
+    var userInput= document.getElementById(this.value);
+    localStorage.setItem(this.value, userInput.value);
 });
 
 $(clearbtn).on("click", function() {
